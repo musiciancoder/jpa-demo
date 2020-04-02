@@ -1,5 +1,7 @@
 package net.itinajero;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +28,52 @@ public class JpaDemoApplication implements CommandLineRunner{
 		//guardar();nn
 		//buscarPorId();
 		//this.modificar();
-this.eliminar();
+//this.eliminar();
+		//contar();
+		//this.eliminarTodos();
+		//this.encontrarPorIds();
+		//this.buscarTodos();
+		this.existeById();
 		
 	}
+	
+	private void existeById() {
+		boolean existe = repo.existsById(5);
+		System.out.println(existe);
+	}
+	
+	private void buscarTodos() {
+	
+		Iterable<Categoria>categorias=repo.findAll();
+		for(Categoria cat:categorias) {
+			System.out.println(cat);
+		}
+	}
+	
+	
+	private void encontrarPorIds() {
+		List<Integer>ids=new LinkedList<Integer>();
+		ids.add(1);
+		ids.add(4);
+		ids.add(10);
+		Iterable<Categoria>categorias=repo.findAllById(ids);
+		for(Categoria cat:categorias) {
+			System.out.println(cat);
+		}
+	}
+	
+	private void eliminarTodos() {
+		repo.deleteAll();
+		System.out.println("Todos eliminados!");
+		
+	}
+	
+	private void contar() {
+		long count = repo.count();
+		System.out.println("Total de registros: "+count);
+		
+	}
+	
 	
 	public void guardar() {
 		Categoria cat = new Categoria();
