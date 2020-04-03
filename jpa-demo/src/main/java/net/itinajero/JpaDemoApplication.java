@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import net.itinajero.model.Categoria;
 import net.itinajero.repository.CategoriasRepository;
@@ -17,7 +20,8 @@ public class JpaDemoApplication implements CommandLineRunner{
 
 	//INYECCION DE DEPENDENCIAS PARA CREAR UN REPOSITORIO repo
 	@Autowired
-	private CategoriasRepository repo;//este es el repositorio, q contiene todos los metodos CRUD
+	private CategoriasRepository repo;//este es el repositorio, q contiene todos los metodos CRUD en CrudRepository y otros métodos tambien tipo CRUD en JPARepositoy( mas especificos).
+	//Recordar que la interfaz JpaRepository extiende la interfaz CrudRepository
 	
 	
 	public static void main(String[] args) {
@@ -33,9 +37,53 @@ public class JpaDemoApplication implements CommandLineRunner{
 		//this.eliminarTodos();
 		//this.encontrarPorIds();
 		//this.buscarTodos();
-		this.existeById();
-		
+		//this.existeById();
+		//buscarTodosJpa();
+		//buscarTodosOrdenadosJpa();
+		//buscarTodosPaginacionJPA();		
+		buscarTodosPaginacionOrdenadosJPA();
 	}
+	
+	
+	private void buscarTodosPaginacionOrdenadosJPA() { 
+		Page <Categoria>page= repo.findAll(PageRequest.of(0, 5, Sort.by("nombre"))); //registros del 0 al 5, ordenados por atributo nombre
+		System.out.println("Total registros: " + page.getTotalElements());
+		System.out.println("Total paginas: " + page.getTotalPages());
+		for(Categoria c: page.getContent()) {
+			System.out.println(c.getId() + " " + c.getNombre());
+		}
+	}
+	
+	private void buscarTodosPaginacionJPA() { 
+		Page <Categoria>page= repo.findAll(PageRequest.of(0, 5)); //registros del 0 al 5
+		System.out.println("Total registros: " + page.getTotalElements());
+		System.out.println("Total paginas: " + page.getTotalPages());
+		for(Categoria c: page.getContent()) {
+			System.out.println(c.getId() + " " + c.getNombre());
+		}
+	}
+	
+	
+	private void buscarTodosOrdenadosJpa() {
+		//List<Categoria>categorias=repo.findAll(Sort.by("nombre")); //devuelve los registros ordenados por algun atributo (en este caso "nomnre")
+		List<Categoria>categorias=repo.findAll(Sort.by("nombre").descending());
+		for(Categoria cat:categorias) {
+			System.out.println(cat.getId() + " " + cat.getNombre());
+		}
+	}
+	
+	//PRECAUCION: BORRA TODA LA TABLA!!
+	private void borrarTodoEnLote() {
+		repo.deleteAllInBatch();
+	}
+	
+	private void buscarTodosJpa() {
+		List<Categoria>categorias=repo.findAll();
+		for(Categoria cat:categorias) {
+			System.out.println(cat.getId() + " " + cat.getNombre());
+		}
+	}
+	
 	
 	private void existeById() {
 		boolean existe = repo.existsById(5);
