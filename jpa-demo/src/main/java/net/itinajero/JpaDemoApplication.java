@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import net.itinajero.model.Categoria;
+import net.itinajero.model.Perfil;
 import net.itinajero.model.Vacante;
 import net.itinajero.repository.CategoriasRepository;
 import net.itinajero.repository.PerfilesRepository;
@@ -56,9 +57,15 @@ public class JpaDemoApplication implements CommandLineRunner{
 		//buscarTodosOrdenadosJpa();
 		//buscarTodosPaginacionJPA();		
 		//buscarTodosPaginacionOrdenadosJPA();
-	buscarVacantes ();
-		//guardarVacante();	
+	//buscarVacantes ();
+		//guardarVacante();
+		crearPerfilesAplicacion();
 		}
+	
+	
+	private void crearPerfilesAplicacion() {
+		repoPerfiles.saveAll(getPerfilesAplicacion()); //Iterable implements LinkedList
+	}
 	
 	private void guardarVacante() {
 		Vacante vacante = new Vacante();
@@ -202,6 +209,28 @@ public class JpaDemoApplication implements CommandLineRunner{
 	}
 	}
 	
-
+	
+	/**
+	 * Metodo que regresa una lista de objetos de tipo Perfil que representa los diferentes PERFILES 
+	 * O ROLES que tendremos en nuestra aplicación de Empleos
+	 * @return
+	 */
+	private List<Perfil> getPerfilesAplicacion(){		
+		List<Perfil> lista = new LinkedList<Perfil>();
+		Perfil per1 = new Perfil();
+		per1.setPerfil("SUPERVISOR");
+		
+		Perfil per2 = new Perfil();
+		per2.setPerfil("ADMINISTRADOR");
+		
+		Perfil per3 = new Perfil();
+		per3.setPerfil("USUARIO");
+		
+		lista.add(per1);
+		lista.add(per2);
+		lista.add(per3);
+		
+		return lista;
+	}
 
 }
