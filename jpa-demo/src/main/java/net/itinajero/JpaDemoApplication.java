@@ -51,9 +51,9 @@ public class JpaDemoApplication implements CommandLineRunner{
 	}
 	
 	private void buscarVacantes (){
-		List<Vacante>vacantes=repoVacantes.findAll(Sort.by("nombre").descending());
-		for(Vacante v:vacantes) {
-			System.out.println(v.getId() + " " + v.getNombre());
+		List<Vacante>lista=repoVacantes.findAll(Sort.by("nombre").descending());
+		for(Vacante v: lista) {
+			System.out.println(v.getId() + " " + v.getNombre()+ " -Categoria: " + v.getCategoria().getNombre());  // Notese que v.getCategoria().getNombre()); es posible por las anotaciones @OneToOne y @JoinColumn en la clase modelo
 		}
 	}
 	
