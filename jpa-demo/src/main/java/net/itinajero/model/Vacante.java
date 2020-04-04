@@ -2,8 +2,13 @@ package net.itinajero.model;
 
 import java.util.Date;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="Vacantes")
 public class Vacante {
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nombre;
 	private String descripcion;
@@ -13,6 +18,8 @@ public class Vacante {
 	private String imagen="no-image,png"; //por defecto va a tener este valor
 	private String estatus;
 	private String detalles;
+	
+	@Transient //Con esto ignoramos el binding a una clase foranea, en este caso categoria. Si no lo ponemos, al mandar llamar el metodo findAll tendermos un error al correr el programa
 	private Categoria categoria;
 	
 	

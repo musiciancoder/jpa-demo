@@ -13,16 +13,21 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import net.itinajero.model.Categoria;
+import net.itinajero.model.Vacante;
 import net.itinajero.repository.CategoriasRepository;
+import net.itinajero.repository.VacantesRepository;
 
 @SpringBootApplication
 public class JpaDemoApplication implements CommandLineRunner{
 
 	//INYECCION DE DEPENDENCIAS PARA CREAR UN REPOSITORIO repo
 	@Autowired
-	private CategoriasRepository repo;//este es el repositorio, q contiene todos los metodos CRUD en CrudRepository y otros métodos tambien tipo CRUD en JPARepositoy( mas especificos).
+	private CategoriasRepository repoCategorias;//este es el repositorio, q contiene todos los metodos CRUD en CrudRepository y otros métodos tambien tipo CRUD en JPARepositoy( mas especificos).
 	//Recordar que la interfaz JpaRepository extiende la interfaz CrudRepository
 	
+	//INYECCION DE DEPENDENCIAS PARA CREAR UN REPOSITORIO repo
+	@Autowired
+	private VacantesRepository repoVacantes;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(JpaDemoApplication.class, args);
@@ -41,12 +46,20 @@ public class JpaDemoApplication implements CommandLineRunner{
 		//buscarTodosJpa();
 		//buscarTodosOrdenadosJpa();
 		//buscarTodosPaginacionJPA();		
-		buscarTodosPaginacionOrdenadosJPA();
+		//buscarTodosPaginacionOrdenadosJPA();
+		 buscarVacantes ();
+	}
+	
+	private void buscarVacantes (){
+		List<Vacante>vacantes=repoVacantes.findAll(Sort.by("nombre").descending());
+		for(Vacante v:vacantes) {
+			System.out.println(v.getId() + " " + v.getNombre());
+		}
 	}
 	
 	
 	private void buscarTodosPaginacionOrdenadosJPA() { 
-		Page <Categoria>page= repo.findAll(PageRequest.of(0, 5, Sort.by("nombre"))); //registros del 0 al 5, ordenados por atributo nombre
+		Page <Categoria>page= repoCategorias.findAll(PageRequest.of(0, 5, Sort.by("nombre"))); //registros del 0 al 5, ordenados por atributo nombre
 		System.out.println("Total registros: " + page.getTotalElements());
 		System.out.println("Total paginas: " + page.getTotalPages());
 		for(Categoria c: page.getContent()) {
@@ -55,7 +68,7 @@ public class JpaDemoApplication implements CommandLineRunner{
 	}
 	
 	private void buscarTodosPaginacionJPA() { 
-		Page <Categoria>page= repo.findAll(PageRequest.of(0, 5)); //registros del 0 al 5
+		Page <Categoria>page= repoCategorias.findAll(PageRequest.of(0, 5)); //registros del 0 al 5
 		System.out.println("Total registros: " + page.getTotalElements());
 		System.out.println("Total paginas: " + page.getTotalPages());
 		for(Categoria c: page.getContent()) {
@@ -66,7 +79,7 @@ public class JpaDemoApplication implements CommandLineRunner{
 	
 	private void buscarTodosOrdenadosJpa() {
 		//List<Categoria>categorias=repo.findAll(Sort.by("nombre")); //devuelve los registros ordenados por algun atributo (en este caso "nomnre")
-		List<Categoria>categorias=repo.findAll(Sort.by("nombre").descending());
+		List<Categoria>categorias=repoCategorias.findAll(Sort.by("nombre").descending());
 		for(Categoria cat:categorias) {
 			System.out.println(cat.getId() + " " + cat.getNombre());
 		}
@@ -74,11 +87,11 @@ public class JpaDemoApplication implements CommandLineRunner{
 	
 	//PRECAUCION: BORRA TODA LA TABLA!!
 	private void borrarTodoEnLote() {
-		repo.deleteAllInBatch();
+		repoCategorias.deleteAllInBatch();
 	}
 	
 	private void buscarTodosJpa() {
-		List<Categoria>categorias=repo.findAll();
+		List<Categoria>categorias=repoCategorias.findAll();
 		for(Categoria cat:categorias) {
 			System.out.println(cat.getId() + " " + cat.getNombre());
 		}
@@ -86,13 +99,13 @@ public class JpaDemoApplication implements CommandLineRunner{
 	
 	
 	private void existeById() {
-		boolean existe = repo.existsById(5);
+		boolean existe = repoCategorias.existsById(5);
 		System.out.println(existe);
 	}
 	
 	private void buscarTodos() {
 	
-		Iterable<Categoria>categorias=repo.findAll();
+		Iterable<Categoria>categorias=repoCategorias.findAll();
 		for(Categoria cat:categorias) {
 			System.out.println(cat);
 		}
@@ -104,20 +117,20 @@ public class JpaDemoApplication implements CommandLineRunner{
 		ids.add(1);
 		ids.add(4);
 		ids.add(10);
-		Iterable<Categoria>categorias=repo.findAllById(ids);
+		Iterable<Categoria>categorias=repoCategorias.findAllById(ids);
 		for(Categoria cat:categorias) {
 			System.out.println(cat);
 		}
 	}
 	
 	private void eliminarTodos() {
-		repo.deleteAll();
+		repoCategorias.deleteAll();
 		System.out.println("Todos eliminados!");
 		
 	}
 	
 	private void contar() {
-		long count = repo.count();
+		long count = repoCategorias.count();
 		System.out.println("Total de registros: "+count);
 		
 	}
@@ -128,7 +141,7 @@ public class JpaDemoApplication implements CommandLineRunner{
 		//cat.setId(id); Esto no va, porque en la clase modelo Categoria pusimos q era llave primaria y autoincrementable
 		cat.setNombre("Finanzas");
 		cat.setDescripcion("Trabajos relacionados con finanzas y contablilidad");
-		repo.save(cat); //con esto guardamos el registro en la tabla MYSQL sin necesidad de escribir codigo SQL
+		repoCategorias.save(cat); //con esto guardamos el registro en la tabla MYSQL sin necesidad de escribir codigo SQL
 		System.out.println(" ");
 		System.out.println(cat);
 		System.out.println(" ");
@@ -136,16 +149,16 @@ public class JpaDemoApplication implements CommandLineRunner{
 	
 	private void eliminar() {
 		int idCategoria =1;
-		repo.deleteById(idCategoria);
+		repoCategorias.deleteById(idCategoria);
 	}
 	
 	private void modificar() {
-		Optional<Categoria>optional=repo.findById(2); //Optional es una clase que puede ser encontrada o no en la BBDD
+		Optional<Categoria>optional=repoCategorias.findById(2); //Optional es una clase que puede ser encontrada o no en la BBDD
 	if(optional.isPresent()){
 		Categoria catTmp= optional.get();
 		catTmp.setNombre("Ing de Software");
 			catTmp.setDescripcion("Desarrollo de sistemas");
-			repo.save(catTmp);
+			repoCategorias.save(catTmp);
 			System.out.println("Categoria modificada");
 	}else {
 		System.out.println("Categoria no encontrada");
@@ -154,7 +167,7 @@ public class JpaDemoApplication implements CommandLineRunner{
 	
 	
 	private void buscarPorId() {
-		Optional<Categoria>optional=repo.findById(5); //Optional es una clase que puede ser encontrada o no en la BBDD
+		Optional<Categoria>optional=repoCategorias.findById(5); //Optional es una clase que puede ser encontrada o no en la BBDD
 	if(optional.isPresent()){
 		System.out.println(optional.get());
 	}else {
