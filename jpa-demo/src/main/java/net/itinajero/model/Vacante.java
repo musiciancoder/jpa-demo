@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Vacantes")  //recordar q el nombre de la BBDD lo configuramos en archivo application.properties
+@Table(name = "vacantes")  //recordar q el nombre de la BBDD lo configuramos en archivo application.properties
 public class Vacante {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,7 @@ public class Vacante {
 				// correr el programa. Esto lo explico primero, por lo q se usa sin el resto de anotaciones OnetoOne JoinColumn, etc
 	
 	@OneToOne //una vacante tiene una categoria
-	@JoinColumn(name="idCategoria") //se une con llave foranea, en este caso idcategoria
+	@JoinColumn(name="idCategoria") //se une con llave foranea de la tabla SQL, en este caso idCategoria
 	private Categoria categoria;
 
 	public Categoria getCategoria() {

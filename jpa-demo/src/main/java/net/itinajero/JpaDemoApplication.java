@@ -38,7 +38,7 @@ public class JpaDemoApplication implements CommandLineRunner{
 		//guardar();nn
 		//buscarPorId();
 		//this.modificar();
-//this.eliminar();
+//this.eliminar(14);
 		//contar();
 		//this.eliminarTodos();
 		//this.encontrarPorIds();
@@ -48,30 +48,31 @@ public class JpaDemoApplication implements CommandLineRunner{
 		//buscarTodosOrdenadosJpa();
 		//buscarTodosPaginacionJPA();		
 		//buscarTodosPaginacionOrdenadosJPA();
-		 buscarVacantes ();
+	buscarVacantes ();
 		//guardarVacante();	
 		}
 	
 	private void guardarVacante() {
 		Vacante vacante = new Vacante();
-		vacante.setNombre("Profesor de Matematicas");
+		vacante.setNombre("Profesor de Castellano");
 		vacante.setDescripcion("Escuela primaria");
 		vacante.setFecha(new Date());
 		vacante.setSalario(8500.0);
-		vacante.setEstatus("Aprovada");
+		vacante.setEstatus("Creada");
 		vacante.setDestacado(0);
 		vacante.setImagen("escuela.png");
-		vacante.setDescripcion("Los requisitos para optar al cargo de profesor de matematicas");
+		vacante.setDetalles("Los requisitos para optar al cargo de profesor de Castellano");
 		Categoria cat = new Categoria();
 		cat.setId(15);//solo con proporcionar el id ya se establece la relacion
 		vacante.setCategoria(cat);
 		repoVacantes.save(vacante);
+		//this.buscarVacantes();
 	}
 	
 	private void buscarVacantes (){
 		List<Vacante>lista=repoVacantes.findAll(Sort.by("nombre"));
 		for(Vacante v: lista) {
-			System.out.println(v.getId() + " " + v.getNombre()+ " -Categoria: " + v.getCategoria().getNombre());  // Notese que v.getCategoria().getNombre()); es posible por las anotaciones @OneToOne y @JoinColumn en la clase modelo
+			System.out.println(v.getId() + " " + v.getNombre()+ " -Categoria: " + v.getCategoria().getNombre() + "idCategoria: " + v.getCategoria().getId());   // Notese que v.getCategoria().getNombre()); es posible por las anotaciones @OneToOne y @JoinColumn en la clase modelo
 		}
 	}
 	
@@ -165,9 +166,9 @@ public class JpaDemoApplication implements CommandLineRunner{
 		System.out.println(" ");
 	}
 	
-	private void eliminar() {
-		int idCategoria =1;
-		repoCategorias.deleteById(idCategoria);
+	private void eliminar(int ido) {
+		
+		repoCategorias.deleteById(ido);
 	}
 	
 	private void modificar() {

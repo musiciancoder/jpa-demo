@@ -7,12 +7,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Categorias") //nombre de la tabla en MYSQL. //recordar q el nombre de la BBDD lo configuramos en archivo application.properties
+@Table(name="categorias") //nombre de la tabla en MYSQL. //recordar q el nombre de la BBDD lo configuramos en archivo application.properties
 public class Categoria {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)//para que el id sea autoincrementable. IDENTITY ES SOLO PARA MYSQL.
-	private Integer id;
+	private Integer id;//este es el idCategoria de la tabla
 	private String nombre;
 	private String descripcion;
 	public Integer getId() {
