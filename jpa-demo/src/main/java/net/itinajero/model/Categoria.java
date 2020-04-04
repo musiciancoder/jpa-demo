@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Categorias") //nombre de la tabla en MYSQL
+@Table(name="Categorias") //nombre de la tabla en MYSQL. //recordar q el nombre de la BBDD lo configuramos en archivo application.properties
 public class Categoria {
 	
 	@Id

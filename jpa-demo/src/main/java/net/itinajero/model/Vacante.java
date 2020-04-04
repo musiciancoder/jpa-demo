@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Vacantes")
+@Table(name = "Vacantes")  //recordar q el nombre de la BBDD lo configuramos en archivo application.properties
 public class Vacante {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

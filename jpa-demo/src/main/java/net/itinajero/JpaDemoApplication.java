@@ -1,5 +1,6 @@
 package net.itinajero;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -48,10 +49,27 @@ public class JpaDemoApplication implements CommandLineRunner{
 		//buscarTodosPaginacionJPA();		
 		//buscarTodosPaginacionOrdenadosJPA();
 		 buscarVacantes ();
+		//guardarVacante();	
+		}
+	
+	private void guardarVacante() {
+		Vacante vacante = new Vacante();
+		vacante.setNombre("Profesor de Matematicas");
+		vacante.setDescripcion("Escuela primaria");
+		vacante.setFecha(new Date());
+		vacante.setSalario(8500.0);
+		vacante.setEstatus("Aprovada");
+		vacante.setDestacado(0);
+		vacante.setImagen("escuela.png");
+		vacante.setDescripcion("Los requisitos para optar al cargo de profesor de matematicas");
+		Categoria cat = new Categoria();
+		cat.setId(15);//solo con proporcionar el id ya se establece la relacion
+		vacante.setCategoria(cat);
+		repoVacantes.save(vacante);
 	}
 	
 	private void buscarVacantes (){
-		List<Vacante>lista=repoVacantes.findAll(Sort.by("nombre").descending());
+		List<Vacante>lista=repoVacantes.findAll(Sort.by("nombre"));
 		for(Vacante v: lista) {
 			System.out.println(v.getId() + " " + v.getNombre()+ " -Categoria: " + v.getCategoria().getNombre());  // Notese que v.getCategoria().getNombre()); es posible por las anotaciones @OneToOne y @JoinColumn en la clase modelo
 		}
