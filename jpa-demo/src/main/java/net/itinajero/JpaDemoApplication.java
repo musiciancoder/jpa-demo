@@ -16,6 +16,8 @@ import org.springframework.data.domain.Sort;
 import net.itinajero.model.Categoria;
 import net.itinajero.model.Vacante;
 import net.itinajero.repository.CategoriasRepository;
+import net.itinajero.repository.PerfilesRepository;
+import net.itinajero.repository.UsuariosRepository;
 import net.itinajero.repository.VacantesRepository;
 
 @SpringBootApplication
@@ -29,6 +31,12 @@ public class JpaDemoApplication implements CommandLineRunner{
 	//INYECCION DE DEPENDENCIAS PARA CREAR UN REPOSITORIO repo
 	@Autowired
 	private VacantesRepository repoVacantes;
+	
+	@Autowired
+	private PerfilesRepository repoPerfiles;
+	
+	@Autowired
+	private UsuariosRepository repoUsuarios;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(JpaDemoApplication.class, args);

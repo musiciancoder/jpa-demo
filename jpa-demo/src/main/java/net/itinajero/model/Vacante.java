@@ -24,7 +24,7 @@ public class Vacante {
 				// correr el programa. Esto lo explico primero, por lo q se usa sin el resto de anotaciones OnetoOne JoinColumn, etc
 	
 	@OneToOne //una vacante tiene una categoria
-	@JoinColumn(name="idCategoria") //se une con llave foranea de la tabla SQL, en este caso idCategoria
+	@JoinColumn(name="idCategoria") //se une con una llave foranea de la tabla SQL, en este caso idCategoria
 	private Categoria categoria;
 
 	public Categoria getCategoria() {

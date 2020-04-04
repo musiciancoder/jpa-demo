@@ -12,7 +12,7 @@ public class Categoria {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)//para que el id sea autoincrementable. IDENTITY ES SOLO PARA MYSQL.
-	private Integer id;//este es el idCategoria de la tabla
+	private Integer id;//este es el idCategoria de la tabla vacantes. Notese que aca simplemente lo definimos como id.
 	private String nombre;
 	private String descripcion;
 	public Integer getId() {
