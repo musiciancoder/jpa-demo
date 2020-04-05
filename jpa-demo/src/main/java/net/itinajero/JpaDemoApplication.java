@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 
 import net.itinajero.model.Categoria;
 import net.itinajero.model.Perfil;
+import net.itinajero.model.Usuario;
 import net.itinajero.model.Vacante;
 import net.itinajero.repository.CategoriasRepository;
 import net.itinajero.repository.PerfilesRepository;
@@ -59,9 +60,32 @@ public class JpaDemoApplication implements CommandLineRunner{
 		//buscarTodosPaginacionOrdenadosJPA();
 	//buscarVacantes ();
 		//guardarVacante();
-		crearPerfilesAplicacion();
+		//crearPerfilesAplicacion();
+		crearUsuarioConDosPerfiles();
 		}
 	
+	//CREAR USUARIO CON DOS PERFILES
+	private void crearUsuarioConDosPerfiles() {
+		Usuario user = new Usuario();
+		user.setNombre("Ivan");
+		user.setEmail("ivan@gmail.com");
+		user.setFechaRegistro(new Date());
+		user.setUsername("itinajero");
+		user.setPassword("12345");
+		user.setEstatus(1);
+		
+		Perfil per1 = new Perfil();
+		per1.setId(2);
+		
+		Perfil per2 = new Perfil();
+		per2.setId(3);
+		
+		user.agregar(per1);
+		user.agregar(per2);
+		
+		repoUsuarios.save(user);
+		
+	}
 	
 	private void crearPerfilesAplicacion() {
 		repoPerfiles.saveAll(getPerfilesAplicacion()); //Iterable implements LinkedList

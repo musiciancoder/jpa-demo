@@ -1,13 +1,17 @@
 package net.itinajero.model;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.*;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 
@@ -25,14 +29,22 @@ public class Usuario {
 	private Integer estatus;
 	private Date fechaRegistro;
 	
+	//Un Usuario @ManyToMany puede tener muchos perfiles.
 	@ManyToMany(fetch = FetchType.EAGER)
+	//Con @JoinTable llenamos la tabla intermedia usuarioperfil en la bbdd, que unira las llaves foraneas idUsuario y idPerfil
 	@JoinTable(name="UsuarioPerfil",
 				joinColumns = @JoinColumn(name="idUsuario"),
 				inverseJoinColumns = @JoinColumn(name="idPerfil")
 			)
 	
-	
 	private List<Perfil>perfiles;
+	
+	public void agregar(Perfil tempPerfil) {
+		if (perfiles == null) {
+			perfiles = new LinkedList<Perfil>();
+			}
+		perfiles.add(tempPerfil);
+	}
 	
 	public Integer getId() {
 		return id;
@@ -64,12 +76,17 @@ public class Usuario {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	
+	
 	public Integer getEstatus() {
 		return estatus;
 	}
+
 	public void setEstatus(Integer estatus) {
 		this.estatus = estatus;
 	}
+
 	public Date getFechaRegistro() {
 		return fechaRegistro;
 	}
