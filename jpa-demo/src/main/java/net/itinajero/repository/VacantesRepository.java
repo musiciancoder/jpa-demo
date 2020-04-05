@@ -11,4 +11,6 @@ public interface VacantesRepository extends JpaRepository<Vacante, Integer> {
 
 	//QueryMethod. Con esto queda disponible este metodo para ser llamado por iny. de dependencias.
 	List<Vacante>findByEstatus(String estatus);
+	//Querymethod keyword And
+	List<Vacante>findByDestacadoAndEstatusOrderByIdDesc(int destacado, String estatus);
 }

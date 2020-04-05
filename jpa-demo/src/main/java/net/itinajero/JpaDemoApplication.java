@@ -63,11 +63,22 @@ public class JpaDemoApplication implements CommandLineRunner{
 		//crearPerfilesAplicacion();
 		//crearUsuarioConDosPerfiles();
 		//buscarUsuario() ;
-		buscarVacantesPorEstatus();		
+		//buscarVacantesPorEstatus();
+		buscarVacantesPorDestacadoEstatus() ;
 		}
 	
 	//EJECUCION DE UN QUERY METHOD
-	public void buscarVacantesPorEstatus() {
+	private void buscarVacantesPorDestacadoEstatus() {
+		List<Vacante>lista=repoVacantes.findByDestacadoAndEstatusOrderByIdDesc(1, "Aprobada");// querymethod declarado en interfaz VacantesRepository
+		System.out.println("Registros encontrados: "+lista.size());
+		for (Vacante v : lista) {
+			System.out.println(v.getId()+ ": " +v.getNombre()+": "+v.getEstatus());
+			
+		}
+	}
+	
+	//EJECUCION DE UN QUERY METHOD
+	private void buscarVacantesPorEstatus() {
 		List<Vacante>lista=repoVacantes.findByEstatus("Aprobada");//findByEstatus es querymethod declarado en interfaz VacantesRepository
 		System.out.println("Registros encontrados: "+lista.size());
 		for (Vacante v : lista) {
@@ -75,6 +86,8 @@ public class JpaDemoApplication implements CommandLineRunner{
 			
 		}
 	}
+	
+
 	
 	
 	public void buscarUsuario() {
