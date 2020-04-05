@@ -61,8 +61,24 @@ public class JpaDemoApplication implements CommandLineRunner{
 	//buscarVacantes ();
 		//guardarVacante();
 		//crearPerfilesAplicacion();
-		crearUsuarioConDosPerfiles();
+		//crearUsuarioConDosPerfiles();
+		buscarUsuario() ;
 		}
+	
+	public void buscarUsuario() {
+		Optional<Usuario>optional = repoUsuarios.findById(6);
+		if(optional.isPresent()) {
+			Usuario u = optional.get();
+			System.out.println("Usuario: " +u.getNombre());
+			System.out.println("Perfiles asignados");
+			for (Perfil p : u.getPerfiles()) {
+				System.out.println(p.getPerfil());
+			}
+		} else {
+				System.out.println("Usuario no encontrado");		
+			
+		}
+	}
 	
 	//CREAR USUARIO CON DOS PERFILES
 	private void crearUsuarioConDosPerfiles() {
