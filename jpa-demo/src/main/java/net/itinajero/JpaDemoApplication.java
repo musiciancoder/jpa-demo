@@ -64,10 +64,22 @@ public class JpaDemoApplication implements CommandLineRunner{
 		//crearUsuarioConDosPerfiles();
 		//buscarUsuario() ;
 		//buscarVacantesPorEstatus();
-		buscarVacantesPorDestacadoEstatus() ;
+		//buscarVacantesPorDestacadoEstatus() ;
+		buscarVacantesSalario() ;
 		}
 	
-	//EJECUCION DE UN QUERY METHOD
+	
+	//EJECUCION DE UN QUERY METHOD BETWEEN
+	private void buscarVacantesSalario() {
+		List<Vacante>lista=repoVacantes.findBySalarioBetweenOrderBySalario(7000.0,14000.0);// querymethod declarado en interfaz VacantesRepository
+		System.out.println("Registros encontrados: "+lista.size());
+		for (Vacante v : lista) {
+			System.out.println(v.getId()+ ": " +v.getNombre()+": "+v.getSalario());
+			
+		}
+	}
+	
+	//EJECUCION DE UN QUERY METHOD AND
 	private void buscarVacantesPorDestacadoEstatus() {
 		List<Vacante>lista=repoVacantes.findByDestacadoAndEstatusOrderByIdDesc(1, "Aprobada");// querymethod declarado en interfaz VacantesRepository
 		System.out.println("Registros encontrados: "+lista.size());
@@ -77,7 +89,7 @@ public class JpaDemoApplication implements CommandLineRunner{
 		}
 	}
 	
-	//EJECUCION DE UN QUERY METHOD
+	//EJECUCION DE UN QUERY METHOD FINDBY
 	private void buscarVacantesPorEstatus() {
 		List<Vacante>lista=repoVacantes.findByEstatus("Aprobada");//findByEstatus es querymethod declarado en interfaz VacantesRepository
 		System.out.println("Registros encontrados: "+lista.size());
