@@ -15,5 +15,7 @@ public interface VacantesRepository extends JpaRepository<Vacante, Integer> {
 	List<Vacante>findByDestacadoAndEstatusOrderByIdDesc(int destacado, String estatus);
 	//Querymethod keyword Between
 	List<Vacante>findBySalarioBetweenOrderBySalario(double s1, double s2);
+	//Querymethod keyword In
+	List<Vacante>findByEstatusIn(String [] estatus);
 
 }

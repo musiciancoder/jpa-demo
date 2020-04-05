@@ -65,7 +65,19 @@ public class JpaDemoApplication implements CommandLineRunner{
 		//buscarUsuario() ;
 		//buscarVacantesPorEstatus();
 		//buscarVacantesPorDestacadoEstatus() ;
-		buscarVacantesSalario() ;
+		//buscarVacantesSalario() ;
+		buscarVacantesVariosEstatus()
+;		}
+	
+	//EJECUCION DE UN QUERY METHOD IN
+		private void buscarVacantesVariosEstatus() {
+			String [] estatus = new String [] {"Eliminada", "Creada"};
+			List<Vacante>lista=repoVacantes.findByEstatusIn(estatus);// querymethod declarado en interfaz VacantesRepository
+			System.out.println("Registros encontrados: "+lista.size());
+			for (Vacante v : lista) {
+				System.out.println(v.getId()+ ": " +v.getNombre()+": "+v.getEstatus());
+				
+			}
 		}
 	
 	
