@@ -218,13 +218,13 @@ public class JpaDemoApplication implements CommandLineRunner{
 	private List<Perfil> getPerfilesAplicacion(){		
 		List<Perfil> lista = new LinkedList<Perfil>();
 		Perfil per1 = new Perfil();
-		per1.setPerfil("SUPERVISOR");
+		per1.setPerfil("SUPERVISOR2");
 		
 		Perfil per2 = new Perfil();
-		per2.setPerfil("ADMINISTRADOR");
+		per2.setPerfil("ADMINISTRADOR2");
 		
 		Perfil per3 = new Perfil();
-		per3.setPerfil("USUARIO");
+		per3.setPerfil("USUARIO2");
 		
 		lista.add(per1);
 		lista.add(per2);
